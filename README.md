@@ -23,6 +23,14 @@ final/
 ├── run_slide_scan_complete.py  # Main workflow script
 ├── sweep_and_stitch.py         # Imaging script
 ├── simple_grid_stitch.py       # Stitching script
+├── slide_scanner.py            # Legacy slide scanner
+├── scan_both_regions.py        # Calibration and slide scanning
+├── calibration/                # Calibration scripts
+│   ├── slide_position_calibration.py  # Interactive slide positioning
+│   ├── focus_calibration.py           # Auto-focus calibration
+│   ├── coverage_planning.py           # Scan pattern planning
+│   ├── select_slide_corners.py        # Slide corner selection
+│   └── select_calibration_corners.py  # Calibration corner selection
 ├── utils/                      # Hardware interfaces
 │   ├── camera_interface.py     # Camera control
 │   └── printer_interface.py    # 3D printer control
@@ -38,8 +46,30 @@ final/
 - Camera connected and working
 - Slide properly positioned
 
-### 2. Configuration Files
-Create these files in `config/`:
+### 2. Initial Setup (First Time Only)
+For first-time setup, run the calibration sequence:
+
+```bash
+# 1. Interactive slide positioning
+python3 calibration/slide_position_calibration.py
+
+# 2. Auto-focus calibration
+python3 calibration/focus_calibration.py
+
+# 3. Coverage planning
+python3 calibration/coverage_planning.py
+
+# 4. Select slide corners
+python3 calibration/select_slide_corners.py
+
+# 5. Select calibration corners
+python3 calibration/select_calibration_corners.py
+```
+
+This will create the necessary configuration files in `config/`.
+
+### 3. Configuration Files
+After calibration, these files will be created in `config/`:
 
 **`config/slide_corners.json`**:
 ```json
@@ -63,17 +93,36 @@ Create these files in `config/`:
 
 ## Usage Options
 
-### Complete Workflow
+### Complete Workflow (After Calibration)
 ```bash
 python3 run_slide_scan_complete.py
 ```
 
-### Stitch Only (Use Existing Images)
+### Initial Calibration (First Time Setup)
 ```bash
-python3 run_slide_scan_complete.py --stitch-only
+# Run complete calibration sequence
+python3 scan_both_regions.py
 ```
 
-### Individual Steps
+### Individual Calibration Steps
+```bash
+# 1. Interactive slide positioning
+python3 calibration/slide_position_calibration.py
+
+# 2. Auto-focus calibration
+python3 calibration/focus_calibration.py
+
+# 3. Coverage planning
+python3 calibration/coverage_planning.py
+
+# 4. Select slide corners
+python3 calibration/select_slide_corners.py
+
+# 5. Select calibration corners
+python3 calibration/select_calibration_corners.py
+```
+
+### Individual Scanning Steps
 ```bash
 # 1. Scan calibration region
 python3 sweep_and_stitch.py --corners config/calibration_corners.json --output calibration_images/
@@ -83,6 +132,11 @@ python3 sweep_and_stitch.py --corners config/slide_corners.json --output slide_i
 
 # 3. Create composite
 python3 simple_grid_stitch.py --capture_dir slide_images/
+```
+
+### Stitch Only (Use Existing Images)
+```bash
+python3 run_slide_scan_complete.py --stitch-only
 ```
 
 ## Output Structure
@@ -126,6 +180,28 @@ If you get "Missing required files" error:
 - **Image count**: 20-100 images
 - **Output size**: 10-50 MB
 - **Memory usage**: ~1-2 GB
+
+## Calibration Features
+
+### Interactive Slide Positioning
+- **File**: `calibration/slide_position_calibration.py`
+- **Purpose**: Find exact slide center and test corner positions
+- **Controls**: WASD keys for movement, R/F for Z-axis, C to capture position
+
+### Auto-Focus Calibration
+- **File**: `calibration/focus_calibration.py`
+- **Purpose**: Automatically find optimal focus using sharpness analysis
+- **Features**: Z-axis sweep with Laplacian variance measurement
+
+### Coverage Planning
+- **File**: `calibration/coverage_planning.py`
+- **Purpose**: Calculate optimal scan patterns with minimal overlap
+- **Features**: Field of view measurement and grid optimization
+
+### Corner Selection
+- **Files**: `calibration/select_slide_corners.py`, `calibration/select_calibration_corners.py`
+- **Purpose**: Interactive corner selection for slide and calibration regions
+- **Features**: Visual feedback and position validation
 
 ## Customization
 
