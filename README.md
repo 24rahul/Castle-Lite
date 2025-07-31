@@ -1,6 +1,6 @@
 # Slide Scanner v3 - Final Package
 
-## 🚀 Quick Start
+## Quick Start
 
 ### One-Command Complete Workflow
 ```bash
@@ -8,13 +8,13 @@ python3 run_slide_scan_complete.py
 ```
 
 This will:
-1. ✅ Check prerequisites
-2. 📸 Scan calibration region
-3. 📸 Scan slide region
-4. 🧩 Create simple grid composite
-5. 📋 Generate session summary
+1. Check prerequisites
+2. Scan calibration region
+3. Scan slide region
+4. Create simple grid composite
+5. Generate session summary
 
-## 📁 File Structure
+## File Structure
 
 ```
 final/
@@ -31,7 +31,7 @@ final/
     └── calibration_corners.json # Calibration region corners
 ```
 
-## 🔧 Prerequisites
+## Prerequisites
 
 ### 1. Hardware Setup
 - 3D printer connected and configured
@@ -61,7 +61,7 @@ Create these files in `config/`:
 }
 ```
 
-## 🎯 Usage Options
+## Usage Options
 
 ### Complete Workflow
 ```bash
@@ -85,7 +85,7 @@ python3 sweep_and_stitch.py --corners config/slide_corners.json --output slide_i
 python3 simple_grid_stitch.py --capture_dir slide_images/
 ```
 
-## 📊 Output Structure
+## Output Structure
 
 After running the complete workflow:
 ```
@@ -102,7 +102,7 @@ scan_session_YYYYMMDD_HHMMSS/
 └── session_summary.json  # Session metadata
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Missing Configuration Files
 If you get "Missing required files" error:
@@ -120,14 +120,14 @@ If you get "Missing required files" error:
 - Check lighting conditions
 - Verify focus settings
 
-## 📈 Performance Notes
+## Performance Notes
 
 - **Typical scan time**: 5-15 minutes
 - **Image count**: 20-100 images
 - **Output size**: 10-50 MB
 - **Memory usage**: ~1-2 GB
 
-## 🛠️ Customization
+## Customization
 
 ### Adjust Grid Density
 Modify in `sweep_and_stitch.py`:
@@ -149,15 +149,15 @@ SHARPNESS_THRESHOLD = 30.0  # Laplacian variance threshold
 LOCAL_SWEEP_RANGE = 1.0     # mm autofocus range
 ```
 
-## 📚 Additional Resources
+## Additional Resources
 
 - See `QUICK_START_GUIDE.md` for detailed instructions
 - Check session summary files for statistics
 - Review captured images for quality assessment
 
-## 🎉 Success Indicators
+## Success Indicators
 
-✅ **Complete workflow**: Session directory created with images
-✅ **Good quality**: Sharp, well-lit images in composite
-✅ **Proper alignment**: Grid pattern visible in stitched output
-✅ **Full coverage**: No missing regions in final composite 
+- **Complete workflow**: Session directory created with images
+- **Good quality**: Sharp, well-lit images in composite
+- **Proper alignment**: Grid pattern visible in stitched output
+- **Full coverage**: No missing regions in final composite 

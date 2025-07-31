@@ -16,17 +16,17 @@ Before running the complete workflow, you need:
 
 ## Complete Workflow Script
 
-### 🚀 One-Command Solution
+### One-Command Solution
 ```bash
 python3 run_slide_scan_complete.py
 ```
 
 This single command will:
-1. ✅ Check prerequisites
-2. 📸 Scan calibration region
-3. 📸 Scan slide region  
-4. 🧩 Create simple grid composite
-5. 📋 Generate session summary
+1. Check prerequisites
+2. Scan calibration region
+3. Scan slide region  
+4. Create simple grid composite
+5. Generate session summary
 
 ### Output Structure
 ```

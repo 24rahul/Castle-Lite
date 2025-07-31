@@ -28,12 +28,12 @@ class SlideScanRunner:
         
         try:
             result = subprocess.run(command, check=True, capture_output=True, text=True)
-            print("✅ SUCCESS")
+            print("SUCCESS")
             if result.stdout:
                 print("Output:", result.stdout)
             return True
         except subprocess.CalledProcessError as e:
-            print(f"❌ FAILED: {e}")
+            print(f"FAILED: {e}")
             if e.stdout:
                 print("STDOUT:", e.stdout)
             if e.stderr:
@@ -55,14 +55,14 @@ class SlideScanRunner:
                 missing_files.append(file_path)
         
         if missing_files:
-            print("❌ Missing required files:")
+            print("Missing required files:")
             for file_path in missing_files:
                 print(f"  - {file_path}")
             print("\nPlease run calibration first:")
             print("  python3 scan_both_regions.py")
             return False
         
-        print("✅ All prerequisites met")
+        print("All prerequisites met")
         return True
     
     def create_session_directories(self):
@@ -70,7 +70,7 @@ class SlideScanRunner:
         print(f"Creating session directories...")
         os.makedirs(self.calibration_dir, exist_ok=True)
         os.makedirs(self.slide_dir, exist_ok=True)
-        print(f"✅ Session directory: {self.session_name}")
+        print(f"Session directory: {self.session_name}")
     
     def run_calibration_scan(self):
         """Run calibration region scan"""
@@ -130,12 +130,12 @@ class SlideScanRunner:
         with open(summary_file, 'w') as f:
             json.dump(summary, f, indent=2)
         
-        print(f"\n📋 Session summary saved: {summary_file}")
+        print(f"\nSession summary saved: {summary_file}")
         return summary
     
     def run_complete_workflow(self):
         """Run the complete workflow"""
-        print("🚀 SLIDE SCAN COMPLETE WORKFLOW")
+        print("SLIDE SCAN COMPLETE WORKFLOW")
         print(f"Session: {self.session_name}")
         print(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
@@ -148,23 +148,23 @@ class SlideScanRunner:
         
         # Run calibration scan
         if not self.run_calibration_scan():
-            print("❌ Calibration scan failed")
+            print("Calibration scan failed")
             return False
         
         # Run slide scan  
         if not self.run_slide_scan():
-            print("❌ Slide scan failed")
+            print("Slide scan failed")
             return False
         
         # Run simple stitch
         if not self.run_simple_stitch():
-            print("❌ Simple stitch failed")
+            print("Simple stitch failed")
             return False
         
         # Create summary
         summary = self.create_session_summary()
         
-        print(f"\n🎉 WORKFLOW COMPLETE!")
+        print(f"\nWORKFLOW COMPLETE!")
         print(f"Session directory: {self.session_name}")
         print(f"Calibration images: {self.calibration_dir}")
         print(f"Slide images: {self.slide_dir}")
@@ -188,11 +188,11 @@ def main():
     runner = SlideScanRunner()
     
     if args.stitch_only:
-        print("🔄 STITCHING ONLY MODE")
+        print("STITCHING ONLY MODE")
         return runner.run_simple_stitch()
     
     if args.skip_calibration and args.skip_scan:
-        print("🔄 STITCHING ONLY MODE")
+        print("STITCHING ONLY MODE")
         return runner.run_simple_stitch()
     
     # Run complete workflow
